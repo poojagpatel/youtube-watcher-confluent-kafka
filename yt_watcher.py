@@ -1,5 +1,5 @@
 from datetime import datetime
-from confluent_kafka import Consumer, KafkaError, KafkaException, SerializingProducer
+from confluent_kafka import SerializingProducer
 from config import config
 import logging
 from pprint import pformat
@@ -9,10 +9,8 @@ import json
 
 
 
-kafka_config = {
-    'bootstrap.servers' : 'localhost:9092'
-}
-
+kafka_config = config['kafka_producer_config']
+topic_name = 'test_topic_1'
 
 # get playlist items for a single page
 def fetch_playlist_items_page(google_api_key, youtube_playlist_id, page_token=None):
@@ -110,7 +108,7 @@ def main():
             logging.info('Got %s', pformat(summarize_video(video)))
 
             producer.produce(
-                topic = "test_topic_1",
+                topic = topic_name,
                 key = video_id,
                 value = json.dumps({
                         'title': video['snippet']['title'],
@@ -121,8 +119,6 @@ def main():
                     }, default=serialize_datetime),
                 on_delivery = delivery_report
             )
-            
-        
     
     producer.flush()
 
@@ -132,10 +128,3 @@ if __name__ == '__main__':
     sys.exit(main())
 
 
-
-
-# {'comments': 1,
-#  'likes': 8,
-#  'title': 'Side Effects Are Why We Can’t Have Nice Things',
-#  'video_id': 'Ime5-Yrn0o4',
-#  'views': 127}
