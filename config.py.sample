@@ -1,16 +1,18 @@
 config = {
-    'google_api_key':'<your key>',
-    'youtube_playlist_id': 'PLr3-bEi1N4khKZm2u6Q8pOLO-WNZrKDHn',
-    'kafka': {
-        'bootstrap.servers': '<your server>',
-        'security.protocol': 'sasl_ssl',
-        'sasl.mechanism': 'PLAIN',
-        'sasl.username': '<your key>',
-        'sasl.password': '<your secret>',
+    'google_api_key':'',
+    'youtube_playlist_id': '',
+    'db_config': {
+            'host': 'localhost',
+            'dbname': 'youtube_watcher',
+            'user': 'postgres',
+            'password': 'postgres'
     },
-    'schema_registry': {
-        'url': '<your SR server>',
-        'basic.auth.user.info': '<your SR key>:<your SR secret>'
+    'kafka_producer_config': {
+            'bootstrap.servers' : 'localhost:9092'
+    },
+    'kafka_consumer_config': {
+        'bootstrap.servers':'localhost:9092',
+        'auto.offset.reset': 'earliest'
     }
 }
 
