@@ -20,7 +20,8 @@ def get_notification_data(cur):
                 title, 
                 likes likes_current, 
                 timestamp, 
-                lead(likes) over(partition by video_id order by timestamp desc) likes_previous
+                lead(likes) over(partition by video_id order by timestamp desc) likes_previous,
+				row_number() over(partition by video_id order by timestamp desc) row_num
             from youtube_stats
         )
 
@@ -32,8 +33,8 @@ def get_notification_data(cur):
                 likes_previous
         from cte
         where likes_previous is not null 
+			and row_num = 1
             and likes_current > likes_previous;
-
     """
     cur.execute(query)
     records = cur.fetchall()
