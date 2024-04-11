@@ -16,8 +16,8 @@ def create_consumer():
     return consumer
 
 def send_notification(data):
-
-    url = 'https://api.telegram.org/bot7131082839:AAGZlvSDV2ByXmMTFzgqcaqPkBRoPWqrO2I/sendMessage'
+    bot_token = config['telegram_bot_token']
+    url = f'https://api.telegram.org/{bot_token}/sendMessage'
 
     # Form parameters
     form_data = {
