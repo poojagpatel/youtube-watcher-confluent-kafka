@@ -7,6 +7,8 @@ import requests
 
 kafka_config = config['kafka_consumer_config'] | {'group.id': 'bar'}
 topic_name = 'notifications'
+bot_token = config['telegram_bot_token']
+chat_id = config['chat_id']
 running = True
 
 def create_consumer():
@@ -16,12 +18,12 @@ def create_consumer():
     return consumer
 
 def send_notification(data):
-    bot_token = config['telegram_bot_token']
+    
     url = f'https://api.telegram.org/{bot_token}/sendMessage'
 
     # Form parameters
     form_data = {
-        'chat_id': '6973377966',
+        'chat_id': chat_id,
         'text': data,
     }
 
